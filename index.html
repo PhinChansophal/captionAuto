@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ម៉ាស៊ីនបង្កើត Caption ម៉ូតូ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f4f7; --card:#ffffff; --ink:#15203a; --muted:#5d6881; --line:#d9dfe9;
+  --red:#d5202b; --red-ink:#ffffff; --chip:#e9edf4; --ok:#157347;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1524; --card:#18203a; --ink:#eef1f8; --muted:#9aa5c0; --line:#2b3558;
+    --red:#ff4a55; --red-ink:#1a0608; --chip:#222c4c; --ok:#58d08e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1524; --card:#18203a; --ink:#eef1f8; --muted:#9aa5c0; --line:#2b3558;
+  --red:#ff4a55; --red-ink:#1a0608; --chip:#222c4c; --ok:#58d08e; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Khmer","Khmer OS Battambang",system-ui,sans-serif;line-height:1.7;font-size:16px}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.7rem;font-weight:800;margin:4px 0 2px;line-height:1.4}
+.sub{color:var(--muted);margin:0 0 20px}
+
+.grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:860px){.grid{grid-template-columns:1fr 1fr;align-items:start}.out{position:sticky;top:16px}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{margin-bottom:12px}
+label{display:block;font-weight:600;font-size:.92rem;margin-bottom:4px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--red);outline-offset:1px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font:inherit;border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:var(--red-ink);font-weight:600}
+.check{display:flex;gap:8px;align-items:center;font-weight:400;margin:2px 0 12px}
+.check input{width:auto}
+h2{font-size:1.05rem;margin:0 0 10px}
+.post{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:6px}
+.post textarea{border:0;background:transparent;min-height:340px;resize:vertical;line-height:1.8}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.btn{font:inherit;font-weight:800;border:0;border-radius:12px;background:var(--red);color:var(--red-ink);padding:11px 22px;cursor:pointer;font-size:1.05rem}
+.btn.alt{background:var(--chip);color:var(--ink);font-weight:600;font-size:.95rem;padding:9px 16px}
+.count{margin-left:auto;color:var(--muted);font-size:.85rem}
+#msg{color:var(--ok);font-weight:600;min-height:1.7em;margin:6px 0 0}
+@media (prefers-reduced-motion:no-preference){.btn{transition:transform .1s}.btn:active{transform:scale(.97)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>ម៉ាស៊ីនបង្កើត Caption ម៉ូតូ</h1>
+  <p class="sub">បំពេញព័ត៌មាន ហើយចុច «ចម្លង» ដើម្បីយកទៅដាក់ Facebook។ រាល់ពេលចុច «បង្កើតថ្មី» ទទួលបាន Caption ប្លែកថ្មី មិនជាន់ដដែលឡើយ។</p>
+
+  <div class="grid">
+    <section class="panel" aria-label="ព័ត៌មានម៉ូតូ">
+      <div class="row">
+
+        <div class="field"><label for="model">ម៉ូដែល</label><input id="model" value="Honda CRF 150"></div>
+        <div class="field"><label for="cond">ស្ថានភាព</label>
+          <select id="cond"><option>ថ្មីកេស</option><option>ក្រដាសពន្ធ</option><option>មួយទឹកស្លាកលេខ</option></select></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="price">តម្លៃពេញ ($)</label><input id="price" inputmode="numeric" value="5000"></div>
+        <div class="field"><label for="deposit">កក់ ($)</label><input id="deposit" inputmode="numeric" value="500"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="monthly">បង់ប្រចាំខែ ($)</label><input id="monthly" inputmode="numeric" value="70"></div>
+        <div class="field"><label for="months">រយៈពេលបង់</label><select id="months"><option value="12">១ ឆ្នាំ</option><option value="24">២ ឆ្នាំ</option><option value="36">៣ ឆ្នាំ</option><option value="48" selected>៤ ឆ្នាំ</option></select></div>
+      </div>
+      <div class="field"><label for="docs">ឯកសារ</label><input id="docs" value="អត្តសញ្ញាណប័ណ្ណ + សៀវភៅគ្រួសារ"></div>
+      <div class="field"><label for="benefit">ចំណុចខ្លាំង</label><input id="benefit" value="កម្លាំងស្ទុះល្អ បូមអេម"></div>
+      <div class="field"><label for="phone">លេខទូរស័ព្ទ</label><input id="phone" inputmode="tel" value="070680780"></div>
+      <div class="field"><label for="tg">Telegram (@ឈ្មោះ ឬ លេខ)</label><input id="tg" placeholder="@username ឬ 070680780" autocapitalize="off"></div>
+      <div class="field"><label for="tags">Hashtags (បំបែកដោយដកឃ្លា)</label><input id="tags" value="#ម៉ូតូ #ម៉ូតូថ្មី #បង់រំលស់ #លក់ម៉ូតូ"></div>
+      <label class="check"><input type="checkbox" id="modeltag" checked> បន្ថែម hashtag តាមឈ្មោះម៉ូដែលដោយស្វ័យប្រវត្តិ</label>
+      <label class="check"><input type="checkbox" id="payoff" checked> បញ្ជាក់ថា បង់ផ្ដាច់បានគ្រប់ពេល</label>
+
+      <div class="field">
+        <label>ប្រភេទ Hook (ឃ្លាដំបូង)</label>
+        <div class="seg" id="hooks" role="group" aria-label="ប្រភេទ Hook"></div>
+      </div>
+    </section>
+
+    <section class="panel out" aria-label="លទ្ធផល">
+      <h2>Caption របស់អ្នក</h2>
+      <div class="post"><textarea id="out" aria-label="Caption" spellcheck="false"></textarea></div>
+      <div class="bar">
+        <button class="btn" id="copy" type="button">ចម្លង Caption</button>
+        <button class="btn alt" id="shuffle" type="button">🔄 បង្កើតថ្មី</button>
+
+        <span class="count" id="count"></span>
+      </div>
+      <p id="msg" role="status"></p>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  function R(a){return a[Math.floor(Math.random()*a.length)]}
+  function H(s){var h=5381;for(var i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return String(h)}
+  function ld(k){try{return JSON.parse(localStorage.getItem(k)||"[]")}catch(e){return[]}}
+  function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+  function fill(t,d){return t.replace(/\{(\w)\}/g,function(_,k){return d[k]})}
+
+  var ST=[
+   {n:"ចំណុចខ្លាំង",h:["🔥 {m} {c}! {b}! 🔥","💥 {m} {c} មកដល់ហើយ! {b}!","🏍️ {m} {c} ស្អាតៗ! {b} ពិតៗ!","✨ ពិសេស! {m} {c} {b} លើសគេ!","🚀 {m} {c} ទាក់ទាញបំផុត! {b}!"]},
+   {n:"តម្លៃ",h:["កក់ត្រឹមតែ {D} ក៏បានជិះ {m} {c}ហើយ! 🏍️","💸 កក់ {D} ប៉ុណ្ណោះ យក {m} {c} ទៅជិះបានភ្លាម!","គ្រាន់តែកក់ {D} ក៏អាចមាន {m} {c} បាន! 🎉","🎯 {m} {c} បង់ត្រឹម {M}/ខែ ប៉ុណ្ណោះ!","ទិញម៉ូតូថ្មីដោយកក់តិចតួច! {m} {c} 💰"]},
+   {n:"ប្រញាប់",h:["⚡ {m} មានចំនួនកំណត់! ឆាប់ទាក់ទងមុនអស់!","⏰ កុំរង់ចាំយូរ! {m} {c} អាចអស់ពីស្តុកគ្រប់ពេល!","🔔 ដំណឹងល្អ! {m} {c} ចូលស្តុកហើយ ឆាប់ជាងគេបានជាងគេ!","🚨 {m} {c} កំពុងពេញនិយម! កុំឱ្យអស់ដៃ!","📢 ស្តុកមានកំណត់! {m} {c} រង់ចាំអ្នកហើយ!"]},
+   {n:"សំណួរ",h:["ចង់មាន {m} តែមិនទាន់មានលុយគ្រប់? 🤔","🤔 សុបិនចង់បាន {m} {c} មែនទេ? ឥឡូវអាចពិតហើយ!","មានការងារត្រូវជិះរាល់ថ្ងៃ? {m} {c} ជាជំនួយការល្អបំផុត! 💪","ធុញនឹងជិះម៉ូតូចាស់? ដល់ពេលដូរមក {m} {c}! 😎","ចង់ជិះ {m} {c} ដោយមិនបាច់បង់ទាំងអស់ម្តង? 💡"]},
+   {n:"ងាយស្រួល",h:["ឯកសារតិចតួច បង់រំលស់ងាយៗ! {m} {c} រង់ចាំអ្នក 🏍️","📄 ឯកសារតែប៉ុណ្ណេះ ក៏បាន {m} {c} ហើយ!","✅ ដំណើរការស្រួល ឆាប់រហ័ស! {m} {c}","🤝 បង់រំលស់ងាយស្រួល មិនស្មុគស្មាញ! {m} {c}","😊 ជិះមុន បង់ក្រោយ! {m} {c} ទាក់ទាញ"]}
+  ];
+  var HK=[];ST.forEach(function(s,i){s.h.forEach(function(t){HK.push({t:t,s:i})})});
+  var CT=["👉 ចង់បានម៉ូតូនេះ? ទាក់ទងឥឡូវ! ចំនួនមានកំណត់!","👉 ហៅ ឬ Inbox មកឥឡូវនេះ!","👉 ចង់ដឹងបន្ថែម? ទូរស័ព្ទមកយើងខ្ញុំ!","📲 Inbox ឬ ហៅមកឥឡូវ យើងខ្ញុំបម្រើអ្នកភ្លាមៗ!","🏁 កុំរង់ចាំ! ទាក់ទងមកទទួលម៉ូតូរបស់អ្នកថ្ងៃនេះ!","💬 ផ្ញើសារ ឬ ទូរស័ព្ទមក ទទួលព័ត៌មានលម្អិតភ្លាម!","🔥 មកមើលម៉ូតូផ្ទាល់ ឬ ទូរស័ព្ទសួរបានគ្រប់ម៉ោង!","✌️ ចូលចិត្តហើយ? ទាក់ទងមកឥឡូវ!"];
+  var LB={p:["💰 តម្លៃពេញ: ","🏷️ តម្លៃម៉ូតូ: ","💵 តម្លៃសរុប: "],d:["💸 កក់ត្រឹមតែ: ","🪙 ដាក់កក់តិចតួច: ","💳 កក់ចាប់ពី: "],m:["📆 បង់ប្រចាំខែ: ","🗓️ បង់ត្រឹមតែខែៗ: ","📅 បង់រំលស់ក្នុងមួយខែ: "],o:["✅ ឯកសារ: ","📄 ឯកសារត្រូវការ: ","📝 ឯកសារតែប៉ុណ្ណេះ: "],b:["✨ ចំណុចខ្លាំង: ","💪 ចំណុចពិសេស: ","🌟 ហេតុអ្វីត្រូវជ្រើស: "]};
+  var PO=["🔓 ក្នុងកំឡុងពេលបង់ អាចបង់ផ្ដាច់បានគ្រប់ពេល","🔓 ចង់បង់ផ្ដាច់មុនកំណត់ក៏បានគ្រប់ពេល","🔓 បង់ផ្ដាច់បានគ្រប់ពេលក្នុងអំឡុងកិច្ចសន្យា"];
+  var HY=["🙏 អរគុណសម្រាប់ការគាំទ្រ!","🏍️ ជិះសុខ ជិះស្រួល ជាមួយយើងខ្ញុំ!","❤️ សូមអរគុណដែលជឿទុកចិត្ត!","","",""];
+  var sel=-1,P=null;
+
+  function num(v){var s=String(v||"").replace(/[^\d]/g,"");return s?s.replace(/\B(?=(\d{3})+(?!\d))/g,","):""}
+  function phone(v){
+
+    var s=String(v||"").replace(/\D/g,"");
+    if(s.length===9)return s.replace(/(\d{3})(\d{3})(\d{3})/,"$1 $2 $3");
+    if(s.length===10)return s.replace(/(\d{3})(\d{3})(\d{4})/,"$1 $2 $3");
+    return String(v||"").trim();
+  }
+  function modelTag(m){var t=m.replace(/[^\w\u1780-\u17FF]/g,"");return t?"#"+t:""}
+
+  function compose(){
+    var model=$("model").value.trim()||"ម៉ូតូ",price=num($("price").value),dep=num($("deposit").value),mon=num($("monthly").value);
+    var docs=$("docs").value.trim(),ben=$("benefit").value.trim(),sel2=$("months");
+    var d={m:model,c:$("cond").value,b:ben.split(/\s+/)[0]||"ខ្លាំងអស្ចារ្យ",D:dep?"$"+dep:"តិចតួច",M:mon?"$"+mon:"តិចតួច"};
+    var l=P.lab,L=[fill(HK[P.hook].t,d),""];
+    if(price)L.push(LB.p[l[0]]+"$"+price);
+    if(dep)L.push(LB.d[l[1]]+"$"+dep);
+    if(mon)L.push(LB.m[l[2]]+"$"+mon+" × "+sel2.value+" ខែ ("+sel2.options[sel2.selectedIndex].text+")");
+    var po=$("payoff").checked?PO[l[3]]:"",dc=docs?LB.o[l[4]]+docs:"",bn=ben?LB.b[l[5]]+ben:"";
+    (P.ord?[dc,bn,po]:[po,dc,bn]).forEach(function(x){if(x)L.push(x)});
+    L.push("");L.push(CT[P.cta]);
+    var p=phone($("phone").value);if(p)L.push("📞 "+p);
+    var tg=$("tg").value.trim();
+    if(tg){
+      if(/^[\d\s+]+$/.test(tg))tg=phone(tg);else if(!/^(@|https?:|t\.me)/i.test(tg))tg="@"+tg;
+      L.push(["✈️ Telegram: ","💬 Telegram: ","📨 Telegram: "][l[6]]+tg);
+    }
+    if(HY[P.hype]){L.push("");L.push(HY[P.hype])}
+    var tags=$("tags").value.trim().split(/\s+/).filter(Boolean);
+    if($("modeltag").checked){var mt=modelTag(model);if(mt&&tags.indexOf(mt)<0)tags.push(mt)}
+    tags.sort(function(a,b){return H(a+P.salt)<H(b+P.salt)?-1:1});
+    if(tags.length){L.push("");L.push(tags.join(" "))}
+    return L.join("\n");
+  }
+  function show(t){
+
+    $("out").value=t;$("count").textContent=t.length+" តួអក្សរ";
+    try{localStorage.setItem("cg_phone",$("phone").value);localStorage.setItem("cg_tags",$("tags").value);localStorage.setItem("cg_tg",$("tg").value)}catch(e){}
+  }
+  function build(){show(compose())}
+
+  function pickFrom(pool,recent){
+    var rc=recent.slice(-Math.min(8,Math.floor(pool.length/2)));
+    var ok=pool.filter(function(x){return rc.indexOf(x)<0});
+    return R(ok.length?ok:pool);
+  }
+  function fresh(){
+    var rh=ld("cg_rh"),rc=ld("cg_rc"),hist=ld("cg_hist"),t="",pool=[],cp=[],i;
+    for(i=0;i<HK.length;i++)if(sel<0||HK[i].s===sel)pool.push(i);
+    for(i=0;i<CT.length;i++)cp.push(i);
+    for(var n=0;n<100;n++){
+      P={hook:pickFrom(pool,rh),cta:pickFrom(cp,rc),lab:[0,1,2,3,4,5,6].map(function(){return Math.floor(Math.random()*3)}),ord:Math.floor(Math.random()*2),hype:Math.floor(Math.random()*HY.length),salt:String(Math.random())};
+      t=compose();
+      if(hist.indexOf(H(t))<0)break;
+    }
+    rh.push(P.hook);rc.push(P.cta);hist.push(H(t));
+    sv("cg_rh",rh.slice(-20));sv("cg_rc",rc.slice(-12));sv("cg_hist",hist.slice(-400));
+    show(t);
+  }
+
+  function drawChips(){
+    var box=$("hooks");box.innerHTML="";
+    ["🎲 ចៃដន្យ"].concat(ST.map(function(s){return s.n})).forEach(function(name,i){
+      var b=document.createElement("button");b.type="button";b.textContent=name;
+      b.setAttribute("aria-pressed",(i-1)===sel?"true":"false");
+      b.onclick=function(){sel=i-1;drawChips();fresh()};
+      box.appendChild(b);
+    });
+
+  }
+  function flash(t){$("msg").textContent=t;setTimeout(function(){$("msg").textContent=""},2200)}
+  function copy(){
+    var ta=$("out"),text=ta.value,h=ld("cg_hist");h.push(H(text));sv("cg_hist",h.slice(-400));
+    function fallback(){
+      ta.focus();ta.select();
+      try{document.execCommand("copy")?flash("បានចម្លងហើយ ✓"):flash("សូមចុចសង្កត់លើអត្ថបទ ហើយជ្រើស Copy")}
+      catch(e){flash("សូមចុចសង្កត់លើអត្ថបទ ហើយជ្រើស Copy")}
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){flash("បានចម្លងហើយ ✓")},fallback);
+    }else fallback();
+  }
+
+  try{
+    var sp=localStorage.getItem("cg_phone"),st=localStorage.getItem("cg_tags");
+    if(sp)$("phone").value=sp;if(st)$("tags").value=st;
+    var sg=localStorage.getItem("cg_tg");if(sg!==null)$("tg").value=sg;
+  }catch(e){}
+  ["model","cond","price","deposit","monthly","months","docs","benefit","phone","tags","modeltag","payoff","tg"].forEach(function(id){
+    $(id).addEventListener("input",build);$(id).addEventListener("change",build);
+  });
+  $("copy").onclick=copy;
+  $("shuffle").onclick=fresh;
+  drawChips();fresh();
+})();
+</script>
+</body>
+</html>
